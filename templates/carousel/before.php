@@ -1,0 +1,1 @@
+<aside id="carousel-<?php echo $id; ?>" class="ck-carousel">
