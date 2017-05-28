@@ -20,5 +20,5 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Include the class used to render carousels in the wordpress custom theme
  */
-if ( !class_exists( 'CK_Carousel' ) )
-	require_once( 'includes/class.ck.carousel.php' );
+if ( !class_exists( 'DH_Carousel' ) )
+	require_once( 'includes/class.dh.carousel.php' );

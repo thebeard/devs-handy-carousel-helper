@@ -1,6 +1,6 @@
 <?php
 
-class CK_Carousel {
+class DH_Carousel {
 
 	/**
 	 * Keeps track of the user-specified template folder
@@ -10,9 +10,15 @@ class CK_Carousel {
 
 	/**
 	 * ID/Name of carousel
-	 * @var string
+	 * @var int
 	 */
 	private $id;
+
+	/**
+	 * Classes of carousel
+	 * @var int
+	 */
+	private $classes;
 
 	/**
 	 * Array of slides. The template file should deal with amd render the slide contents. No suggestions or format dictated for slide content. A mere array of Post ID's could be used, or nested arrays with multiplte fields per slide
@@ -56,7 +62,7 @@ class CK_Carousel {
 
 		// Set object properties
 		$this->set_template_folder( $template_folder );
-		$this->set_id( $id );
+		$this->set_attributes( $id );
 		$this->set_slides( $slides );
 		$this->set_template( $template );
 		$this->set_plugin_directory();
@@ -64,6 +70,54 @@ class CK_Carousel {
 
 		// Render if arguments request rendering on construction
 		if ( $render ) $this->render();
+	}
+
+	/**
+	 * Looks at passed in $id and delegate assignment of id's and classes accordingly
+	 * @param mixed $id
+	 */
+	private function set_attributes( $id ) {
+		if ( gettype( $id ) == 'array' ) {
+			$this->set_classes( $id );
+			if ( isset( $id[ 'id' ] ) && $id[ 'id' ] ) {
+				$this->set_id( $id[ 'id' ] );
+			} else {
+				$this->set_id( 'id-' . time() );
+			}
+		} else {
+			$this->set_id( $id );
+			$this->set_classes( array() );
+		};
+	}
+
+	/**
+	 * Set Classes Value
+	 * @param array $attr Looks at passed value and sets classes string
+	 */
+	private function set_classes( $attr ) {
+		$classes = array( 'dh-carousel' );
+
+		if ( isset( $attr[ 'classes' ] ) && $attr[ 'classes' ] ) {
+			$type = gettype( $attr[ 'classes' ] );
+			switch( $type ) {
+				case 'array':
+					$classes = array_merge( $classes, $attr[ 'classes' ] );
+					break;
+				case 'string':
+					$classes = array_merge( $classes, explode( ' ', $attr[ 'classes' ] ) );
+					break;
+			}			
+		}
+
+		$this->classes = implode( ' ', $classes );
+	}
+
+	/**
+	 * Get the Carousel Classes
+	 * @return string Carousel Classes
+	 */
+	private function get_classes() {
+		return $this->classes;
 	}
 
 	/**
@@ -228,7 +282,11 @@ class CK_Carousel {
 	 */
 	private function before_slider( $echo = true ) {
 		if ( ! $echo ) ob_start();
+
+		// Prep the attributes
 		$id = $this->get_id();
+		$classes = $this->get_classes();
+
 		include $this->locate_template( 'before' );
 		if ( ! $echo ) return ob_get_clean();
 	}

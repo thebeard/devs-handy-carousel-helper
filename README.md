@@ -6,9 +6,9 @@ A nifty little object implementation that helps to render carousel HTML quickly.
 ## Basic Structure
 When the plugin is activated a new class can be instantiated by calling the constructor with three required parameters.
 
-`$carousel = new CK_Carousel( $id, $slides, $template );`
+`$carousel = new DH_Carousel( $id, $slides, $template );`
 
-`$id` = The name of the instantiated carousel
+`$id` = The name of the instantiated carousel. If an array is passed with keys `id` and `classes`, these will be used as HTML attributes instead.
 
 `$slides` = An array containing content to be displayed on each slide. The array can be one-dimensional with only Post ID's or a multi-dimensional array so that you can use array values in the template file.
 
@@ -19,7 +19,7 @@ After the instantiation the carousel can be rendered by calling `$carousel->rend
 To specify the wrapper for the slides, place HTML markup in files called `before.php` and `after.php` in the same folder as the slide template file.
 
 ## The HTML
-The rendered HTML ( by default and not overridden ) will include the carousel's `$id` as the `<aside id="">` attribute and `ck-carousel` as the class. The sample slide template also suggests how a counter can be used for slide markup.
+The rendered HTML ( by default and not overridden ) will include the carousel's `$id` as the `<aside id="">` attribute and `dh-carousel` as the class. The sample slide template also suggests how a counter can be used for slide markup.
 
 ## Next Steps
-This plugin only renders the carousel HTML. You must still select a Javascript/jQuery carousel plugin to trigger on the `ck-carousel` class and include some styles for the carousel wrapper and slides into your stylesheet. We suggest the use of [Owl Carousel](https://owlcarousel2.github.io/OwlCarousel2/), a great carousel plugin we use often.
+This plugin only renders the carousel HTML. You must still select a Javascript/jQuery carousel plugin to trigger on the `dh-carousel` class and include some styles for the carousel wrapper and slides into your stylesheet. We suggest the use of [Owl Carousel](https://owlcarousel2.github.io/OwlCarousel2/), a great carousel plugin we use often.
